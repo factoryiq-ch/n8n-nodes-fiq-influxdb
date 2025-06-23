@@ -1,0 +1,70 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up git user for CI
+        run: |
+          git config user.name "FactoryIQ CI"
+          git config user.email "noreply@factoryiq.io"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.1.4
+
+      - name: Use Node.js 18.17.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.17.0
+          registry-url: 'https://registry.npmjs.org/'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Bump version using standard-version
+        run: |
+          # Install standard-version globally for this step
+          pnpm add -g standard-version
+
+          # Configure standard-version to not prefix tags
+          echo '{"tagPrefix": ""}' > .versionrc.json
+
+          # Run release and capture version
+          standard-version
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+        id: release
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "chore(release): ${{ steps.release.outputs.version }}"
+          body: |
+            This PR bumps the version to **${{ steps.release.outputs.version }}** and updates CHANGELOG.md.
+
+            After merging this PR, a tag will be automatically created and the package will be published to npm.
+          branch: "release/${{ steps.release.outputs.version }}"
+          commit-message: "chore(release): ${{ steps.release.outputs.version }}"
