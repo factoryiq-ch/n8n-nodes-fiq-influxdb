@@ -69,7 +69,7 @@ const QUERY_BOOKMARKS = {
 
 export class InfluxDb implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'InfluxDB',
+		displayName: 'FactoryIQ InfluxDB',
 		name: 'influxDb',
 		icon: { light: 'file:FactoryIQ.svg', dark: 'file:FactoryIQ.svg' },
 		group: ['transform'],
