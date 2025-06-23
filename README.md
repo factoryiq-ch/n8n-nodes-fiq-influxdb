@@ -195,7 +195,7 @@ LIMIT 10
 ## Development
 
 ### Requirements
-- Node.js 18.10 or later
+- Node.js 18.17.0 or later
 - pnpm 8.1 or later
 - No external dependencies (uses only n8n-workflow APIs)
 
@@ -219,7 +219,7 @@ pnpm lintfix
 |----------------|------------|-----------------------------------------------------------|
 | n8n            | 1.95.3     | [npm](https://www.npmjs.com/package/n8n)                  |
 | n8n-workflow   | 1.82.0     | [npm](https://www.npmjs.com/package/n8n-workflow)         |
-| Node.js        | 18.10.0    | [nodejs.org](https://nodejs.org/)                         |
+| Node.js        | 18.17.0    | [nodejs.org](https://nodejs.org/)                         |
 | InfluxDB       | v3.x       | [InfluxDB v3 Documentation](https://docs.influxdata.com/influxdb3/) |
 
 - This node is tested and supported on the above versions.

@@ -8,7 +8,7 @@ import {
 export class InfluxDbApi implements ICredentialType {
 	name = 'influxDbApi';
 	displayName = 'InfluxDB API';
-	documentationUrl = 'https://docs.influxdata.com/influxdb/';
+	documentationUrl = 'https://github.com/factoryiq-ch/n8n-nodes-fiq-influxdb?tab=readme-ov-file#configuration';
 
 	properties: INodeProperties[] = [
 		{
