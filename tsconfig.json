@@ -26,5 +26,8 @@
 		"nodes/**/*",
 		"nodes/**/*.json",
 		"package.json",
+		"__tests__/**/*",
+		"types/**/*"
 	],
+	"types": ["jest", "node"]
 }
